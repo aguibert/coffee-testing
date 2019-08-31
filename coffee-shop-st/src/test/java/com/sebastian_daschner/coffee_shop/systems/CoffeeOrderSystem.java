@@ -17,7 +17,6 @@ import org.junit.Ignore;
 
 import com.sebastian_daschner.coffee_shop.entity.Order;
 
-@Ignore
 @Path("/resources/orders")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

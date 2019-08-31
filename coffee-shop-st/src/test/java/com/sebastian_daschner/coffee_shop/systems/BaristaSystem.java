@@ -18,12 +18,13 @@ import java.util.concurrent.locks.LockSupport;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.matching.ContentPattern;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import com.sebastian_daschner.coffee_shop.EnvConfig;
 
 public class BaristaSystem {
 
     public BaristaSystem() {
-        String host = System.getProperty("barista.test.host", "localhost");
-        int port = Integer.parseInt(System.getProperty("barista.test.port", "8002"));
+        String host = EnvConfig.barista.getContainerIpAddress();
+        int port = EnvConfig.barista.getFirstMappedPort();
 
         configureFor(host, port);
         reset();

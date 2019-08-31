@@ -4,12 +4,14 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
+import org.microshed.testing.SharedContainerConfig;
 import org.microshed.testing.jupiter.MicroShedTest;
 
 import com.sebastian_daschner.coffee_shop.entity.Order;
 import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
 
 @MicroShedTest
+@SharedContainerConfig(EnvConfig.class)
 public class CreateOrderValidationTest {
 
     @Inject
