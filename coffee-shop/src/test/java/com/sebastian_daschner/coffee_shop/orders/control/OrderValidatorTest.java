@@ -1,24 +1,27 @@
 package com.sebastian_daschner.coffee_shop.orders.control;
 
-import com.sebastian_daschner.coffee_shop.orders.boundary.CoffeeShop;
-import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
-import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.validation.ConstraintValidatorContext;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.validation.ConstraintValidatorContext;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import com.sebastian_daschner.coffee_shop.orders.boundary.CoffeeShop;
+import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
+import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 
 class OrderValidatorTest {
 
@@ -48,7 +51,7 @@ class OrderValidatorTest {
     }
 
     private static Collection<String> validData() {
-        return List.of(
+        return list(
                 "{\"type\":\"ESPRESSO\",\"origin\":\"Colombia\"}",
                 "{\"type\":\"Espresso\",\"origin\":\"Colombia\"}",
                 "{\"type\":\"LATTE\",\"origin\":\"Colombia\"}",
@@ -66,11 +69,18 @@ class OrderValidatorTest {
     }
 
     private static Collection<String> invalidData() {
-        return List.of(
+        return list(
                 "{\"type\":\"SIPHON\",\"origin\":\"Colombia\"}",
                 "{\"type\":null,\"origin\":\"Colombia\"}",
                 "{\"origin\":\"Colombia\"}",
                 "{\"type\":\"ESPRESSO\",\"origin\":\"Ethiopia\"}");
+    }
+    
+    private static List<String> list(String... data) {
+        List<String> l = new ArrayList<>();
+        for (String s : data)
+            l.add(s);
+        return l;
     }
 
 }

@@ -5,28 +5,66 @@
     <artifactId>coffee-shop-st</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+    
+     <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
-
+<!--         <dependency> -->
+<!-- 	        <groupId>com.github.microshed</groupId> -->
+<!-- 	        <artifactId>microshed-testing</artifactId> -->
+<!-- 	        <version>v0.3.1-alpha</version> -->
+<!-- 	        <scope>test</scope> -->
+<!-- 	    </dependency> -->
+        <dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing-testcontainers</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing-liberty</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+	    
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter</artifactId>
+	        <version>5.4.2</version>
+	        <scope>test</scope>
+	    </dependency>
+    
         <!--JUnit, Mockito-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.3.1</version>
+            <version>5.5.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.3.1</version>
+            <version>5.5.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.junit.vintage</groupId> -->
+<!--             <artifactId>junit-vintage-engine</artifactId> -->
+<!--             <version>5.3.1</version> -->
+<!--             <scope>test</scope> -->
+<!--         </dependency> -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -107,6 +145,9 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.1</version>
+                <configuration>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
             </plugin>
         </plugins>
     </build>

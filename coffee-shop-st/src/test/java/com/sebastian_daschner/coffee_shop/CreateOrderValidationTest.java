@@ -1,29 +1,24 @@
 package com.sebastian_daschner.coffee_shop;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
-import com.sebastian_daschner.coffee_shop.systems.BaristaSystem;
-import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+
 import org.junit.jupiter.api.Test;
+import org.microshed.testing.jupiter.MicroShedTest;
 
-import java.net.URI;
-import java.util.List;
+import com.sebastian_daschner.coffee_shop.entity.Order;
+import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
 
-import static org.assertj.core.api.Assertions.assertThat;
+@MicroShedTest
+public class CreateOrderValidationTest {
 
-class CreateOrderValidationTest {
-
-    private CoffeeOrderSystem coffeeOrderSystem;
-
-    @BeforeEach
-    void setUp() {
-        coffeeOrderSystem = new CoffeeOrderSystem();
-    }
+    @Inject
+    public static CoffeeOrderSystem coffeeOrderSystem;
 
     @Test
     void invalidEmptyOrder() {
-        coffeeOrderSystem.createInvalidOrder(new Order());
+        Response r = coffeeOrderSystem.createOrder(new Order());
+        verifyClientError(r);
     }
 
     @Test
@@ -40,7 +35,7 @@ class CreateOrderValidationTest {
     void invalidCoffeeType() {
         createOrder("Siphon", "Colombia");
     }
-
+    
     @Test
     void invalidCoffeeOrigin() {
         createOrder("Espresso", "Germany");
@@ -58,7 +53,17 @@ class CreateOrderValidationTest {
 
     private void createOrder(String o, String colombia) {
         Order order = new Order(o, colombia);
-        coffeeOrderSystem.createInvalidOrder(order);
+        Response r = coffeeOrderSystem.createOrder(order);
+        verifyClientError(r);
+    }
+    
+    private void verifyClientError(Response response) {
+        verifyStatus(response, Response.Status.Family.CLIENT_ERROR);
+    }
+
+    private void verifyStatus(Response response, Response.Status.Family clientError) {
+        if (response.getStatusInfo().getFamily() != clientError)
+            throw new AssertionError("Status was not successful: " + response.getStatus());
     }
 
 }
