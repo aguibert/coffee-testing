@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Container;
 public class EnvConfig implements SharedContainerConfiguration {
     
     @Container
-    public static MicroProfileApplication<?> app = new MicroProfileApplication<>("coffee-shop")
+    public static MicroProfileApplication app = new MicroProfileApplication("coffee-shop")
         .withNetworkAliases("coffee-shop")
         .withExposedPorts(9080)
         .withAppContextRoot("coffee-shop")
