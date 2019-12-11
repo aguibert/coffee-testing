@@ -11,9 +11,9 @@ public class EnvConfig implements SharedContainerConfiguration {
     @Container
     public static ApplicationContainer app = new ApplicationContainer("coffee-shop")
         .withNetworkAliases("coffee-shop")
-        .withExposedPorts(9080)
-        .withAppContextRoot("coffee-shop")
-        .withReadinessPath("/coffee-shop/resources");
+        .withAppContextRoot("/coffee-shop")
+        .withReadinessPath("/coffee-shop/resources")
+        .withExposedPorts(9080);
     
     @Container
     public static PostgreSQLContainer<?> db = new PostgreSQLContainer<>()

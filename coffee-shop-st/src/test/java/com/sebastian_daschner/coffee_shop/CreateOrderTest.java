@@ -4,10 +4,8 @@ import static com.sebastian_daschner.coffee_shop.systems.BaristaSystem.extractId
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,9 +14,10 @@ import org.microshed.testing.SharedContainerConfig;
 import org.microshed.testing.jaxrs.RESTClient;
 import org.microshed.testing.jupiter.MicroShedTest;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
 import com.sebastian_daschner.coffee_shop.systems.BaristaSystem;
 import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
+import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem.Order;
+import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem.OrderTeaser;
 
 @MicroShedTest
 @SharedContainerConfig(EnvConfig.class)
@@ -31,8 +30,6 @@ public class CreateOrderTest {
 
     @Test
     void createVerifyOrder() {
-        List<Order> originalOrders = coffeeOrderSystem.getOrders();
-
         Order order = new Order("Espresso", "Colombia");
         Response resp = coffeeOrderSystem.createOrder(order);
         UUID created = UUID.fromString(extractId(resp.getLocation()));
@@ -40,7 +37,8 @@ public class CreateOrderTest {
         Order loadedOrder = coffeeOrderSystem.getOrder(created);
         assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
-        assertThat(coffeeOrderSystem.getOrders()).contains(order);
+        OrderTeaser orderTeaser = new OrderTeaser(resp.getLocation().toString(), loadedOrder.origin, loadedOrder.status);
+        assertThat(coffeeOrderSystem.getOrders()).contains(orderTeaser);
     }
 
     @Test
@@ -56,12 +54,12 @@ public class CreateOrderTest {
         assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
         loadedOrder = waitForProcessAndGet(orderUri, "PREPARING");
-        assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
+        assertThat(loadedOrder.status).isEqualTo("Preparing");
 
         baristaSystem.answerForOrder(orderUri, "FINISHED");
 
         loadedOrder = waitForProcessAndGet(orderUri, "FINISHED");
-        assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
+        assertThat(loadedOrder.status).isEqualTo("Finished");
     }
 
     private Order waitForProcessAndGet(URI orderUri, String requestedStatus) {
