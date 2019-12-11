@@ -6,24 +6,17 @@
     <version>1.0</version>
     <packaging>jar</packaging>
     
-     <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
-	        <groupId>com.github.microshed.microshed-testing</groupId>
-	        <artifactId>microshed-testing-liberty</artifactId>
-	        <version>v0.4-beta</version>
-	        <scope>test</scope>
-	    </dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing-liberty</artifactId>
+            <version>0.6.1.1</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
 		    <groupId>org.testcontainers</groupId>
 		    <artifactId>postgresql</artifactId>
-		    <version>1.12.0</version>
+		    <version>1.12.3</version>
 		    <scope>test</scope>
 		</dependency>
 		<dependency>

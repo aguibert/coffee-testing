@@ -1,10 +1,10 @@
 package com.sebastian_daschner.coffee_shop;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 import org.microshed.testing.SharedContainerConfig;
+import org.microshed.testing.jaxrs.RESTClient;
 import org.microshed.testing.jupiter.MicroShedTest;
 
 import com.sebastian_daschner.coffee_shop.entity.Order;
@@ -14,7 +14,7 @@ import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
 @SharedContainerConfig(EnvConfig.class)
 public class CreateOrderValidationTest {
 
-    @Inject
+    @RESTClient
     public static CoffeeOrderSystem coffeeOrderSystem;
 
     @Test
